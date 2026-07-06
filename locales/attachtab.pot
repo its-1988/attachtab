@@ -1,0 +1,61 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: attachtab\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Attachments tab"
+msgstr ""
+
+msgid "Attachment"
+msgid_plural "Attachments"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "No attachments yet."
+msgstr ""
+
+msgid "Show images embedded in text"
+msgstr ""
+
+msgid "Image embedded in text"
+msgstr ""
+
+msgid "File"
+msgstr ""
+
+msgid "Source"
+msgstr ""
+
+msgid "Added by"
+msgstr ""
+
+msgid "Date"
+msgstr ""
+
+msgid "Detach file"
+msgstr ""
+
+msgid "Detach this file? The document itself is kept."
+msgstr ""
+
+msgid "Invalid parameters"
+msgstr ""
+
+msgid "Invalid request"
+msgstr ""
+
+msgid "Item not found"
+msgstr ""
+
+msgid "Access denied"
+msgstr ""
+
+msgid "Link not found"
+msgstr ""
+
+msgid "Deletion failed"
+msgstr ""

@@ -1,0 +1,127 @@
+{#
+  Attachments tab plugin for GLPI — tab body.
+  Variables: item, rows, inline_count, can_unlink, unlink_url
+#}
+<div class="attachtab-tab" data-unlink-url="{{ unlink_url }}"
+     data-empty-text="{{ __('No attachments yet.', 'attachtab') }}">
+    <style>
+        .attachtab-tab .attachtab-inline { display: none; }
+        .attachtab-tab.attachtab-show-inline .attachtab-inline { display: table-row; }
+        .attachtab-tab .attachtab-title { font-size: 0.85em; }
+    </style>
+
+    {% if rows|length == 0 %}
+        <p class="text-muted mt-2">{{ __('No attachments yet.', 'attachtab') }}</p>
+    {% else %}
+        {% if inline_count > 0 %}
+            <label class="form-check form-switch mt-2">
+                <input type="checkbox" class="form-check-input attachtab-toggle-inline">
+                <span class="form-check-label">
+                    {{ __('Show images embedded in text', 'attachtab') }} ({{ inline_count }})
+                </span>
+            </label>
+        {% endif %}
+
+        <div class="table-responsive mt-2">
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>{{ __('File', 'attachtab') }}</th>
+                        <th>{{ __('Source', 'attachtab') }}</th>
+                        <th>{{ __('Added by', 'attachtab') }}</th>
+                        <th>{{ __('Date', 'attachtab') }}</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in rows %}
+                        <tr class="{{ row.is_inline ? 'attachtab-inline' : '' }}">
+                            <td>
+                                <a href="{{ row.download_url }}" target="_blank" rel="noopener">
+                                    <i class="ti ti-download me-1"></i>{{ row.filename }}
+                                </a>
+                                {% if row.title and row.title != row.filename %}
+                                    <div class="text-muted attachtab-title">{{ row.title }}</div>
+                                {% endif %}
+                                {% if row.is_inline %}
+                                    <span class="badge bg-secondary-lt">{{ __('Image embedded in text', 'attachtab') }}</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ row.source }}</td>
+                            <td>{{ row.user }}</td>
+                            <td>{{ row.date }}</td>
+                            <td class="text-end">
+                                {% if row.can_unlink %}
+                                    <button type="button"
+                                            class="btn btn-sm btn-ghost-danger attachtab-unlink"
+                                            data-id="{{ row.link_id }}"
+                                            data-itemtype="{{ get_class(item) }}"
+                                            data-items-id="{{ item.getID() }}"
+                                            title="{{ __('Detach file', 'attachtab') }}"
+                                            data-confirm="{{ __('Detach this file? The document itself is kept.', 'attachtab') }}">
+                                        <i class="ti ti-unlink"></i>
+                                    </button>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+</div>
+
+<script>
+(function() {
+    if (window.attachtabInit) {
+        return; // bound once; the tab body is re-injected on each visit
+    }
+    window.attachtabInit = true;
+
+    $(document).on('change', '.attachtab-toggle-inline', function() {
+        $(this).closest('.attachtab-tab').toggleClass('attachtab-show-inline', this.checked);
+    });
+
+    $(document).on('click', '.attachtab-unlink', function() {
+        var btn = $(this);
+        if (btn.prop('disabled')) {
+            return; // request already in flight
+        }
+        if (!window.confirm(btn.data('confirm'))) {
+            return;
+        }
+        btn.prop('disabled', true);
+        var tab = btn.closest('.attachtab-tab');
+        $.ajax({
+            url: tab.data('unlink-url'),
+            method: 'POST',
+            dataType: 'json',
+            data: {
+                id: btn.data('id'),
+                itemtype: btn.data('itemtype'),
+                items_id: btn.data('items-id')
+            },
+            headers: {
+                'X-Glpi-Csrf-Token': $('meta[property="glpi:csrf_token"]').attr('content')
+            }
+        }).done(function(resp) {
+            if (resp && resp.ok) {
+                btn.closest('tr').remove();
+                if (tab.find('tbody tr').length === 0) {
+                    tab.find('.table-responsive, .form-switch').remove();
+                    tab.append(
+                        $('<p class="text-muted mt-2"></p>').text(tab.data('empty-text'))
+                    );
+                }
+            } else {
+                btn.prop('disabled', false);
+                window.alert((resp && resp.message) || 'Error');
+            }
+        }).fail(function(xhr) {
+            btn.prop('disabled', false);
+            var resp = xhr.responseJSON;
+            window.alert((resp && resp.message) || 'Error');
+        });
+    });
+})();
+</script>

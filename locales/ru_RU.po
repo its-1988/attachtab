@@ -1,0 +1,62 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: attachtab\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru_RU\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+
+msgid "Attachments tab"
+msgstr "Вкладка вложений"
+
+msgid "Attachment"
+msgid_plural "Attachments"
+msgstr[0] "Вложение"
+msgstr[1] "Вложения"
+msgstr[2] "Вложений"
+
+msgid "No attachments yet."
+msgstr "Вложений пока нет."
+
+msgid "Show images embedded in text"
+msgstr "Показать изображения из текста"
+
+msgid "Image embedded in text"
+msgstr "Изображение из текста"
+
+msgid "File"
+msgstr "Файл"
+
+msgid "Source"
+msgstr "Источник"
+
+msgid "Added by"
+msgstr "Добавил"
+
+msgid "Date"
+msgstr "Дата"
+
+msgid "Detach file"
+msgstr "Открепить файл"
+
+msgid "Detach this file? The document itself is kept."
+msgstr "Открепить этот файл? Сам документ сохранится."
+
+msgid "Invalid parameters"
+msgstr "Неверные параметры"
+
+msgid "Invalid request"
+msgstr "Неверный запрос"
+
+msgid "Item not found"
+msgstr "Объект не найден"
+
+msgid "Access denied"
+msgstr "Доступ запрещён"
+
+msgid "Link not found"
+msgstr "Связь не найдена"
+
+msgid "Deletion failed"
+msgstr "Не удалось удалить"
